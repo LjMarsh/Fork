@@ -9,17 +9,21 @@
 #include <string.h>
 #include <ctype.h>
 
+#define BUFFER_SIZE 1024
 #define COUNT_SIZE 26
+
+int max(int count[]);
+int min(int count[]);
 
 int main()
 {
-  char buffer[1024], input, curchar;
+  char buffer[BUFFER_SIZE], input, curchar;
   int i = 0, count[COUNT_SIZE];
   int other = 0;
 
   // request and read in the string from the user
   printf("Enter text for analysis: ");
-  while ( (input = getchar()) != '\n' ) {
+  while ( ((input = getchar()) != '\n') && (i < (BUFFER_SIZE - 1))) {
     buffer[i++] = input;
   }
   buffer[i] = '\0';
@@ -37,6 +41,8 @@ int main()
     curchar = toupper(buffer[i]);
     if (curchar >= 65 && curchar <= 90) count[curchar - 65]++;
     else other++;
+
+
   }
 
   // Create the letter analysis table
@@ -48,6 +54,7 @@ int main()
                                count[i],
                                (((float) count[i]) / strlen(buffer)) * 100);
   }
+  
   // Output the number of other characters
   printf("%-10s%-15d%-15.2f\n","Other",
                               other,
